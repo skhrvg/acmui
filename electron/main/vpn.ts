@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process'
-import { win } from './index'
+import { setTrayOpacity, win } from './index'
 
 function handleOutput(data: string) {
   const outputs = data.toString().split('\n')
@@ -9,7 +9,14 @@ function handleOutput(data: string) {
         continue
       line = line.replace('\r  >> ', '')
       const [key, value] = line.split(': ', 2)
-      win.webContents.send('output', key, value)
+      if (win)
+        win.webContents.send('output', key, value)
+      if (key === 'state') {
+        if (value.startsWith('Connected'))
+          setTrayOpacity(true)
+        if (value.startsWith('Disconnected'))
+          setTrayOpacity(false)
+      }
     }
   }
 }

@@ -26,7 +26,6 @@ export const useVPNStore = defineStore('vpn', () => {
 
   // noinspection JSIgnoredPromiseFromCall
   check()
-  setInterval(() => check(), 15 * 1000)
 
   const status = computed(() =>
     state.value.startsWith('Connected')

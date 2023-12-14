@@ -25,6 +25,10 @@ let tray: Electron.Tray
 const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
+const trayImage = nativeImage.createFromPath(join(process.env.PUBLIC, 'trayTemplate@2x.png'))
+const trayDisconnectedImage = nativeImage.createFromPath(
+  join(process.env.PUBLIC, 'trayDisconnectedTemplate@2x.png'),
+)
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -68,13 +72,12 @@ async function createWindow() {
 }
 
 function createTray() {
-  tray = new Tray(nativeImage.createFromPath(join(process.env.PUBLIC, 'tray@2x.png')))
+  tray = new Tray(trayDisconnectedImage)
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Quit VPN',
       type: 'normal',
       click: async () => {
-        await disconnectVPN()
         app.quit()
       },
     },
@@ -116,8 +119,14 @@ app.on('window-all-closed', () => {
   win = null
 })
 
+app.on('before-quit', async () => {
+  await disconnectVPN()
+})
+
 app.whenReady().then(() => {
   createTray()
+  checkVPN()
+  setInterval(() => checkVPN(), 15 * 1000)
   ipcMain.handle('disconnect', async () => {
     await disconnectVPN()
   })
@@ -127,10 +136,13 @@ app.whenReady().then(() => {
   ipcMain.handle('check', async () => {
     await checkVPN()
   })
-  ipcMain.handle('quit', async () => {
-    await disconnectVPN()
+  ipcMain.handle('quit', () => {
     app.quit()
   })
 })
 
-export { win }
+function setTrayOpacity(connected: boolean) {
+  tray.setImage(connected ? trayImage : trayDisconnectedImage)
+}
+
+export { win, setTrayOpacity }
