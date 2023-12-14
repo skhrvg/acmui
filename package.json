@@ -1,0 +1,42 @@
+{
+  "name": "acmui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AnyConnect Mac UI",
+  "author": "Gleb Sakahrov<@skhrvg>",
+  "license": "MIT",
+  "main": "dist-electron/main/index.js",
+  "debug": {
+    "env": {
+      "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344/"
+    }
+  },
+  "scripts": {
+    "app:dev": "vite",
+    "app:build": "vue-tsc --noEmit && vite build && electron-builder",
+    "app:preview": "vite preview",
+    "lint": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.4.5",
+    "@tailwindcss/forms": "^0.5.7",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "@vueuse/core": "^9.13.0",
+    "autoprefixer": "^10.4.16",
+    "electron": "^22.3.27",
+    "electron-builder": "^23.6.0",
+    "eslint": "^8.55.0",
+    "eslint-plugin-vue": "^9.19.2",
+    "pinia": "^2.1.7",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^4.9.5",
+    "unplugin-auto-import": "^0.12.2",
+    "vite": "^4.5.1",
+    "vite-plugin-electron": "^0.11.2",
+    "vite-plugin-electron-renderer": "^0.11.4",
+    "vue": "^3.3.11",
+    "vue-router": "^4.2.5",
+    "vue-tsc": "^1.8.25"
+  }
+}

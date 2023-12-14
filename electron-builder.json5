@@ -1,0 +1,17 @@
+/**
+ * @see https://www.electron.build/configuration/configuration
+ */
+{
+  "appId": "vg.skhr.acmui",
+  "productName": "AnyConnect Mac UI",
+  "asar": true,
+  "icon": "public/icon.icns",
+  "directories": {
+    "output": "release/${version}"
+  },
+  "files": ["dist-electron", "dist"],
+  "mac": {
+    "artifactName": "${productName} ${version}.${ext}",
+    "target": ["dmg"]
+  }
+}
