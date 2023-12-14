@@ -41,7 +41,7 @@ function quit() {
     />
     <button
       type="button"
-      class="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline
+      class="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm duration-200 focus-visible:outline
       focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50"
       :class="
         status === 'connected'

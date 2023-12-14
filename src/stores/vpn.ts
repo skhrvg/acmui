@@ -37,7 +37,7 @@ export const useVPNStore = defineStore('vpn', () => {
 
   function setError(e: string) {
     error.value = e
-    setTimeout(() => error.value = '', 5 * 1000)
+    setTimeout(() => error.value = '', 10 * 1000)
   }
 
   async function check() {

@@ -20,7 +20,8 @@ const value = useVModel(props, 'modelValue', emit)
 
 <template>
   <div
-    class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-green-800 bg-gray-950"
+    class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-700 focus-within:ring-2
+    focus-within:ring-green-800 bg-gray-950 duration-200"
     :class="{
       'opacity-50': disabled,
     }"
