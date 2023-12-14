@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useVPNStore } from '@/stores/vpn'
+import { useVPNStore } from '../stores/vpn'
 
 const { state, notice, status } = storeToRefs(useVPNStore())
 </script>

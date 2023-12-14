@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import FInput from '@/components/FInput.vue'
-import { useVPNStore } from '@/stores/vpn'
+import { useVPNStore } from '../stores/vpn'
+import FInput from '../components/FInput.vue'
 
 const vpnStore = useVPNStore()
 const { status } = storeToRefs(vpnStore)
