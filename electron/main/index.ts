@@ -19,6 +19,7 @@ if (!app.requestSingleInstanceLock()) {
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
+// eslint-disable-next-line import/no-mutable-exports
 let win: BrowserWindow | null = null
 let tray: Electron.Tray
 const preload = join(__dirname, '../preload/index.js')
