@@ -1,23 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../views/HomePage.vue'
-import AboutPage from '../views/AboutPage.vue'
+import ConnectionView from '../views/ConnectionView.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'entry',
-    redirect: 'home',
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: HomePage,
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: AboutPage,
+    name: 'connection',
+    component: ConnectionView,
   },
 ]
 

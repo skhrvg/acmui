@@ -8,7 +8,8 @@ function handleOutput(data: string) {
       if (!line.startsWith('\r  >> '))
         continue
       line = line.replace('\r  >> ', '')
-      win.webContents.send('output', line)
+      const [key, value] = line.split(': ', 2)
+      win.webContents.send('output', key, value)
     }
   }
 }

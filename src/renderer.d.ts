@@ -4,8 +4,8 @@ export interface VPNElectronAPI {
   check: () => Promise<void>
   connect: (url: string, username: string, password: string) => Promise<void>
   disconnect: () => Promise<void>
-  onOutput: (callback: (event: IpcRendererEvent, output: string) => void) => Promise<void>
   quit: () => Promise<void>
+  onOutput: (callback: (event: IpcRendererEvent, type: string, output: string) => void) => void
 }
 
 declare global {
