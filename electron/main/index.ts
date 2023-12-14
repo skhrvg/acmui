@@ -103,10 +103,13 @@ function getWindowPosition() {
 }
 
 app.dock.hide()
-app.setLoginItemSettings({
-  openAtLogin: true,
-  openAsHidden: true,
-})
+const { openAtLogin } = app.getLoginItemSettings()
+if (!openAtLogin) {
+  app.setLoginItemSettings({
+    openAtLogin: true,
+    openAsHidden: true,
+  })
+}
 
 app.on('window-all-closed', () => {
   win = null
