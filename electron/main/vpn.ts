@@ -27,7 +27,7 @@ function handleError(data: string) {
 
 export function disconnectVPN(): Promise<void> {
   return new Promise((resolve) => {
-    const disconnect = spawn('/opt/cisco/anyconnect/bin/vpn', ['disconnect'])
+    const disconnect = spawn('/opt/cisco/secureclient/bin/vpn', ['disconnect'])
     disconnect.stdout.on('data', handleOutput)
     disconnect.stderr.on('data', handleError)
     disconnect.on('close', (code, signal) => {
@@ -39,7 +39,7 @@ export function disconnectVPN(): Promise<void> {
 
 export function checkVPN(): Promise<void> {
   return new Promise((resolve) => {
-    const check = spawn('/opt/cisco/anyconnect/bin/vpn', ['state'])
+    const check = spawn('/opt/cisco/secureclient/bin/vpn', ['state'])
     check.stdout.on('data', handleOutput)
     check.stderr.on('data', handleError)
     check.on('close', (code, signal) => {
@@ -51,7 +51,7 @@ export function checkVPN(): Promise<void> {
 
 export function connectVPN(url: string, username: string, password: string): Promise<void> {
   return new Promise((resolve) => {
-    const connect = spawn('/opt/cisco/anyconnect/bin/vpn', ['-s', 'connect', url])
+    const connect = spawn('/opt/cisco/secureclient/bin/vpn', ['-s', 'connect', url])
     connect.stdin.write(`${username}\n`)
     connect.stdin.write(`${password}\n`)
     connect.stdin.write('y\n')
