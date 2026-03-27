@@ -1,10 +1,12 @@
-import process from 'node:process'
+import type { Plugin } from 'vite'
 import { rmSync } from 'node:fs'
-import { defineConfig } from 'vite'
+import { builtinModules } from 'node:module'
+import process from 'node:process'
+import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
+import { defineConfig } from 'vite'
 import electron from 'vite-plugin-electron'
-import renderer from 'vite-plugin-electron-renderer'
 import pkg from './package.json'
 
 rmSync('dist-electron', { recursive: true, force: true })
@@ -13,14 +15,48 @@ const isDevelopment
   = process.env.NODE_ENV === 'development' || !!process.env.VSCODE_DEBUG
 const isProduction = process.env.NODE_ENV === 'production'
 
+const electronBuiltins = [
+  'electron',
+  ...builtinModules.filter(m => !m.startsWith('_')),
+  ...builtinModules.filter(m => !m.startsWith('_')).map(m => `node:${m}`),
+]
+
+function electronRendererPlugin(): Plugin {
+  return {
+    name: 'electron-renderer',
+    enforce: 'pre',
+    config() {
+      return {
+        base: './',
+        build: {
+          rollupOptions: {
+            output: { freeze: false },
+          },
+          commonjsOptions: {
+            ignore: electronBuiltins,
+          },
+        },
+        optimizeDeps: {
+          exclude: electronBuiltins,
+        },
+      }
+    },
+    resolveId(source) {
+      if (electronBuiltins.includes(source))
+        return { id: source, external: true }
+    },
+  }
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     vue(),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
-      imports: ['vue', 'vue-router', 'vue/macros', '@vueuse/core'],
+      imports: ['vue', 'vue-router', '@vueuse/core'],
       dts: 'src/auto-imports.d.ts',
     }),
 
@@ -74,9 +110,7 @@ export default defineConfig({
     ]),
 
     // Use Node.js API in the Renderer-process
-    renderer({
-      nodeIntegration: true,
-    }),
+    electronRendererPlugin(),
   ],
 
   server: process.env.VSCODE_DEBUG

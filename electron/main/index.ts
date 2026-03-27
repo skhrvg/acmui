@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import process from 'node:process'
-import { BrowserWindow, Menu, Tray, app, ipcMain, nativeImage, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, shell, Tray } from 'electron'
 import { checkVPN, connectVPN, disconnectVPN } from './vpn'
 
 process.env.DIST_ELECTRON = join(__dirname, '..')
@@ -126,7 +126,7 @@ app.on('before-quit', async () => {
 app.whenReady().then(() => {
   createTray()
   checkVPN()
-  setInterval(() => checkVPN(), 15 * 1000)
+  setInterval(checkVPN, 15 * 1000)
   ipcMain.handle('disconnect', async () => {
     await disconnectVPN()
   })
@@ -145,4 +145,4 @@ function setTrayOpacity(connected: boolean) {
   tray.setImage(connected ? trayImage : trayDisconnectedImage)
 }
 
-export { win, setTrayOpacity }
+export { setTrayOpacity, win }

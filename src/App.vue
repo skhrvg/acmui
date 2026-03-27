@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TheStatus from './components/TheStatus.vue'
 import TheError from './components/TheError.vue'
+import TheStatus from './components/TheStatus.vue'
 </script>
 
 <template>

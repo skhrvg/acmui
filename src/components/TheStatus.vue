@@ -15,9 +15,9 @@ const { state, notice, status } = storeToRefs(useVPNStore())
       leave-to-class="opacity-0"
       leave-from-class="opacity-0"
     >
-      <div v-if="status === 'connected'" class="background from-green-800" />
-      <div v-else-if="status === 'disconnected'" class="background from-red-800" />
-      <div v-else class="background from-yellow-800" />
+      <div v-if="status === 'connected'" class="absolute inset-0 bg-linear-to-b from-green-800 to-transparent duration-500" />
+      <div v-else-if="status === 'disconnected'" class="absolute inset-0 bg-linear-to-b from-red-800 to-transparent duration-500" />
+      <div v-else class="absolute inset-0 bg-linear-to-b from-yellow-800 to-transparent duration-500" />
     </TransitionGroup>
     <p class="font-medium text-center text-xl uppercase z-10 mt-3 tracking-wide">
       {{ state }}
@@ -34,9 +34,3 @@ const { state, notice, status } = storeToRefs(useVPNStore())
     </p>
   </div>
 </template>
-
-<style scoped lang="postcss">
-.background {
-  @apply absolute inset-0 bg-gradient-to-b to-transparent duration-500
-}
-</style>

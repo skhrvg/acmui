@@ -1,0 +1,10 @@
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
+allowBuilds:
+  electron: true
+  electron-winstaller: true
+onlyBuiltDependencies:
+  - esbuild
+  - electron
