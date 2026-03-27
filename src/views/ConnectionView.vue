@@ -9,6 +9,7 @@ const { status } = storeToRefs(vpnStore)
 const url = useLocalStorage('url', '', {})
 const username = useLocalStorage('username', '', {})
 const password = useLocalStorage('password', '', {})
+const otpSecret = useLocalStorage('otpSecret', '', {})
 
 function quit() {
   window.vpn.quit()
@@ -39,6 +40,14 @@ function quit() {
       placeholder="••••••"
       :disabled="status !== 'disconnected'"
     />
+    <FInput
+      id="otpSecret"
+      v-model="otpSecret"
+      label="OTP Secret"
+      type="password"
+      placeholder="otpauth://totp/..."
+      :disabled="status !== 'disconnected'"
+    />
     <button
       type="button"
       class="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm duration-200 focus-visible:outline
@@ -49,7 +58,7 @@ function quit() {
           : 'bg-green-700 enabled:hover:bg-green-800 focus-visible:outline-green-800'
       "
       :disabled="status === 'other'"
-      @click="status === 'connected' ? vpnStore.disconnect() : vpnStore.connect(url, username, password)"
+      @click="status === 'connected' ? vpnStore.disconnect() : vpnStore.connect(url, username, password, otpSecret)"
     >
       {{ status === 'connected' ? 'Disconnect' : 'Connect' }}
     </button>

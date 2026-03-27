@@ -6,8 +6,8 @@ contextBridge.exposeInMainWorld(
   {
     check: async () =>
       await ipcRenderer.invoke('check'),
-    connect: async (url: string, username: string, password: string) =>
-      await ipcRenderer.invoke('connect', { url, username, password }),
+    connect: async (url: string, username: string, password: string, otpSecret?: string) =>
+      await ipcRenderer.invoke('connect', { url, username, password, otpSecret }),
     disconnect: async () =>
       await ipcRenderer.invoke('disconnect'),
     quit: async () =>

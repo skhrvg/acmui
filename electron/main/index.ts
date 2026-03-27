@@ -33,7 +33,7 @@ const trayDisconnectedImage = nativeImage.createFromPath(
 async function createWindow() {
   win = new BrowserWindow({
     width: 270,
-    height: 404,
+    height: 470,
     backgroundColor: '#111827',
     alwaysOnTop: true,
     resizable: false,
@@ -130,8 +130,8 @@ app.whenReady().then(() => {
   ipcMain.handle('disconnect', async () => {
     await disconnectVPN()
   })
-  ipcMain.handle('connect', async (event, args: { url: string, username: string, password: string }) => {
-    await connectVPN(args.url, args.username, args.password)
+  ipcMain.handle('connect', async (event, args: { url: string, username: string, password: string, otpSecret?: string }) => {
+    await connectVPN(args.url, args.username, args.password, args.otpSecret)
   })
   ipcMain.handle('check', async () => {
     await checkVPN()

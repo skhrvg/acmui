@@ -44,8 +44,8 @@ export const useVPNStore = defineStore('vpn', () => {
     await window.vpn.check()
   }
 
-  async function connect(url: string, username: string, password: string) {
-    await window.vpn.connect(url, username, password)
+  async function connect(url: string, username: string, password: string, otpSecret?: string) {
+    await window.vpn.connect(url, username, password, otpSecret || undefined)
     await check()
   }
 

@@ -1,5 +1,11 @@
 import { spawn } from 'node:child_process'
+import * as OTPAuth from 'otpauth'
 import { setTrayOpacity, win } from './index'
+
+function generateOTP(otpSecret: string): string {
+  const totp = OTPAuth.URI.parse(otpSecret) as OTPAuth.TOTP
+  return totp.generate()
+}
 
 function handleOutput(data: string) {
   const outputs = data.toString().split('\n')
@@ -49,11 +55,16 @@ export function checkVPN(): Promise<void> {
   })
 }
 
-export function connectVPN(url: string, username: string, password: string): Promise<void> {
+export function connectVPN(url: string, username: string, password: string, otpSecret?: string): Promise<void> {
   return new Promise((resolve) => {
     const connect = spawn('/opt/cisco/secureclient/bin/vpn', ['-s', 'connect', url])
     connect.stdin.write(`${username}\n`)
     connect.stdin.write(`${password}\n`)
+    if (otpSecret) {
+      const otp = generateOTP(otpSecret)
+      console.info(`Generated OTP: ${otp}`)
+      connect.stdin.write(`${otp}\n`)
+    }
     connect.stdin.write('y\n')
     connect.stdin.end()
     connect.stdout.on('data', handleOutput)
